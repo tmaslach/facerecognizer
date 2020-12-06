@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # ignore my datasets (images of famliy)
-facerecognizer/facerecognizer/datasets
+__datasets__
+__cache__

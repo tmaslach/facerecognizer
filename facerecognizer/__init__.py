@@ -1,1 +1,1 @@
-from .viewer import ImageView, CameraView
+from .viewer import ImageView, CameraView, MainWindow

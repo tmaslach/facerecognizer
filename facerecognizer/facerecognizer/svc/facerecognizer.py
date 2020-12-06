@@ -9,10 +9,11 @@ def to_fullpath(filename):
     return os.path.join(this_dir, filename)    
 
 class FaceRecognizer:
-    dataset_folder   = to_fullpath("../datasets")
     embedder_file    = to_fullpath("data/nn4.small2.v1.t7")
-    recognizer_pkl   = to_fullpath("storage/recognizer.pkl")
-    labelencoder_pkl = to_fullpath("storage/le.pkl")
+    # All user data/cache files go into top level folder
+    dataset_folder   = to_fullpath("../../../__datasets__")
+    recognizer_pkl   = to_fullpath("../../../__cache__/svc/recognizer.pkl")
+    labelencoder_pkl = to_fullpath("../../../__cache__/svc/le.pkl")
 
     def __init__(self):
         self.embedder = cv2.dnn.readNetFromTorch(self.embedder_file)
@@ -43,6 +44,10 @@ class FaceRecognizer:
         name        = self.label_encoder.classes_[best_index]
 
         return name, probability
+
+    def get_all_names(self):
+        names = [f.name for f in os.scandir(self.dataset_folder) if f.is_dir()]
+        return names
 
     def remember(self, name, face):
         name_folder = os.path.join(self.dataset_folder, name)
